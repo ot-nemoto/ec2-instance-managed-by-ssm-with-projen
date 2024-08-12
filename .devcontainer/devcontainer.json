@@ -16,7 +16,7 @@
   // "forwardPorts": [],
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "git config --global --add safe.directory /workspaces/ec2-instance-managed-by-ssm-with-projen",
+  "postCreateCommand": "yarn install && git config --global --add safe.directory /workspaces/ec2-instance-managed-by-ssm-with-projen",
 
   // Configure tool-specific properties.
   "customizations": {
