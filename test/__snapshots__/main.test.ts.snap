@@ -1,0 +1,534 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+    "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter": {
+      "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2",
+      "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+    },
+  },
+  "Resources": {
+    "instanceB7CCE687": {
+      "DependsOn": [
+        "roleC7B7E775",
+      ],
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            0,
+            {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "IamInstanceProfile": {
+          "Ref": "instanceInstanceProfile931F14E3",
+        },
+        "ImageId": {
+          "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter",
+        },
+        "InstanceType": "t2.micro",
+        "SecurityGroupIds": [
+          {
+            "Fn::GetAtt": [
+              "instanceInstanceSecurityGroup725C795D",
+              "GroupId",
+            ],
+          },
+        ],
+        "SubnetId": {
+          "Ref": "mainprivatesubnetSubnet1Subnet26260BA9",
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ec2-instance-managed-by-ssm-with-projen",
+          },
+        ],
+        "UserData": {
+          "Fn::Base64": "#!/bin/bash",
+        },
+      },
+      "Type": "AWS::EC2::Instance",
+    },
+    "instanceInstanceProfile931F14E3": {
+      "Properties": {
+        "Roles": [
+          {
+            "Ref": "roleC7B7E775",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::InstanceProfile",
+    },
+    "instanceInstanceSecurityGroup725C795D": {
+      "Properties": {
+        "GroupDescription": "test/instance/InstanceSecurityGroup",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ec2-instance-managed-by-ssm-with-projen",
+          },
+        ],
+        "VpcId": {
+          "Ref": "main7AD10839",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "main7AD10839": {
+      "Properties": {
+        "CidrBlock": "10.0.0.0/16",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test/main",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::VPC",
+    },
+    "mainec2messages88DF0115": {
+      "Properties": {
+        "PrivateDnsEnabled": true,
+        "SecurityGroupIds": [
+          {
+            "Fn::GetAtt": [
+              "mainec2messagesSecurityGroupC3B2B089",
+              "GroupId",
+            ],
+          },
+        ],
+        "ServiceName": {
+          "Fn::Join": [
+            "",
+            [
+              "com.amazonaws.",
+              {
+                "Ref": "AWS::Region",
+              },
+              ".ec2messages",
+            ],
+          ],
+        },
+        "SubnetIds": [
+          {
+            "Ref": "mainprivatesubnetSubnet1Subnet26260BA9",
+          },
+          {
+            "Ref": "mainprivatesubnetSubnet2Subnet366402DD",
+          },
+        ],
+        "VpcEndpointType": "Interface",
+        "VpcId": {
+          "Ref": "main7AD10839",
+        },
+      },
+      "Type": "AWS::EC2::VPCEndpoint",
+    },
+    "mainec2messagesSecurityGroupC3B2B089": {
+      "Properties": {
+        "GroupDescription": "test/main/ec2messages/SecurityGroup",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": {
+              "Fn::GetAtt": [
+                "main7AD10839",
+                "CidrBlock",
+              ],
+            },
+            "Description": {
+              "Fn::Join": [
+                "",
+                [
+                  "from ",
+                  {
+                    "Fn::GetAtt": [
+                      "main7AD10839",
+                      "CidrBlock",
+                    ],
+                  },
+                  ":443",
+                ],
+              ],
+            },
+            "FromPort": 443,
+            "IpProtocol": "tcp",
+            "ToPort": 443,
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test/main",
+          },
+        ],
+        "VpcId": {
+          "Ref": "main7AD10839",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "mainprivatesubnetSubnet1RouteTableAssociation591E8DF5": {
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "mainprivatesubnetSubnet1RouteTableF3D2E033",
+        },
+        "SubnetId": {
+          "Ref": "mainprivatesubnetSubnet1Subnet26260BA9",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "mainprivatesubnetSubnet1RouteTableF3D2E033": {
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test/main/private-subnetSubnet1",
+          },
+        ],
+        "VpcId": {
+          "Ref": "main7AD10839",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "mainprivatesubnetSubnet1Subnet26260BA9": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            0,
+            {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.0.0/24",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "private-subnet",
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Isolated",
+          },
+          {
+            "Key": "Name",
+            "Value": "test/main/private-subnetSubnet1",
+          },
+        ],
+        "VpcId": {
+          "Ref": "main7AD10839",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "mainprivatesubnetSubnet2RouteTable5EBC380D": {
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test/main/private-subnetSubnet2",
+          },
+        ],
+        "VpcId": {
+          "Ref": "main7AD10839",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "mainprivatesubnetSubnet2RouteTableAssociationD6626BD7": {
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "mainprivatesubnetSubnet2RouteTable5EBC380D",
+        },
+        "SubnetId": {
+          "Ref": "mainprivatesubnetSubnet2Subnet366402DD",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "mainprivatesubnetSubnet2Subnet366402DD": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            1,
+            {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.1.0/24",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "private-subnet",
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Isolated",
+          },
+          {
+            "Key": "Name",
+            "Value": "test/main/private-subnetSubnet2",
+          },
+        ],
+        "VpcId": {
+          "Ref": "main7AD10839",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "mainssm81A444BB": {
+      "Properties": {
+        "PrivateDnsEnabled": true,
+        "SecurityGroupIds": [
+          {
+            "Fn::GetAtt": [
+              "mainssmSecurityGroupDF88A35E",
+              "GroupId",
+            ],
+          },
+        ],
+        "ServiceName": {
+          "Fn::Join": [
+            "",
+            [
+              "com.amazonaws.",
+              {
+                "Ref": "AWS::Region",
+              },
+              ".ssm",
+            ],
+          ],
+        },
+        "SubnetIds": [
+          {
+            "Ref": "mainprivatesubnetSubnet1Subnet26260BA9",
+          },
+          {
+            "Ref": "mainprivatesubnetSubnet2Subnet366402DD",
+          },
+        ],
+        "VpcEndpointType": "Interface",
+        "VpcId": {
+          "Ref": "main7AD10839",
+        },
+      },
+      "Type": "AWS::EC2::VPCEndpoint",
+    },
+    "mainssmSecurityGroupDF88A35E": {
+      "Properties": {
+        "GroupDescription": "test/main/ssm/SecurityGroup",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": {
+              "Fn::GetAtt": [
+                "main7AD10839",
+                "CidrBlock",
+              ],
+            },
+            "Description": {
+              "Fn::Join": [
+                "",
+                [
+                  "from ",
+                  {
+                    "Fn::GetAtt": [
+                      "main7AD10839",
+                      "CidrBlock",
+                    ],
+                  },
+                  ":443",
+                ],
+              ],
+            },
+            "FromPort": 443,
+            "IpProtocol": "tcp",
+            "ToPort": 443,
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test/main",
+          },
+        ],
+        "VpcId": {
+          "Ref": "main7AD10839",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "mainssmmessagesC87FF131": {
+      "Properties": {
+        "PrivateDnsEnabled": true,
+        "SecurityGroupIds": [
+          {
+            "Fn::GetAtt": [
+              "mainssmmessagesSecurityGroup98BF213D",
+              "GroupId",
+            ],
+          },
+        ],
+        "ServiceName": {
+          "Fn::Join": [
+            "",
+            [
+              "com.amazonaws.",
+              {
+                "Ref": "AWS::Region",
+              },
+              ".ssmmessages",
+            ],
+          ],
+        },
+        "SubnetIds": [
+          {
+            "Ref": "mainprivatesubnetSubnet1Subnet26260BA9",
+          },
+          {
+            "Ref": "mainprivatesubnetSubnet2Subnet366402DD",
+          },
+        ],
+        "VpcEndpointType": "Interface",
+        "VpcId": {
+          "Ref": "main7AD10839",
+        },
+      },
+      "Type": "AWS::EC2::VPCEndpoint",
+    },
+    "mainssmmessagesSecurityGroup98BF213D": {
+      "Properties": {
+        "GroupDescription": "test/main/ssmmessages/SecurityGroup",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": {
+              "Fn::GetAtt": [
+                "main7AD10839",
+                "CidrBlock",
+              ],
+            },
+            "Description": {
+              "Fn::Join": [
+                "",
+                [
+                  "from ",
+                  {
+                    "Fn::GetAtt": [
+                      "main7AD10839",
+                      "CidrBlock",
+                    ],
+                  },
+                  ":443",
+                ],
+              ],
+            },
+            "FromPort": 443,
+            "IpProtocol": "tcp",
+            "ToPort": 443,
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test/main",
+          },
+        ],
+        "VpcId": {
+          "Ref": "main7AD10839",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "roleC7B7E775": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ec2.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;

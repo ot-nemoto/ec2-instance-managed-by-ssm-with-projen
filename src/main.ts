@@ -36,7 +36,7 @@ export class MyStack extends Stack {
       vpc,
       instanceType: ec2.InstanceType.of(
         ec2.InstanceClass.T2,
-        ec2.InstanceSize.MICRO
+        ec2.InstanceSize.MICRO,
       ),
       machineImage: new ec2.AmazonLinuxImage({
         generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
@@ -47,7 +47,7 @@ export class MyStack extends Stack {
           iam.ManagedPolicy.fromManagedPolicyArn(
             this,
             'AmazonSSMManagedInstanceCore',
-            'arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore'
+            'arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore',
           ),
         ],
       }),
